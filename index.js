@@ -12,14 +12,7 @@ wss.on('connection', function (webSocket, req) {
     var userID = req.url.substring(1)
     webSockets[userID] = webSocket
     console.log('connected: ' + userID + ' in ' + Object.getOwnPropertyNames(webSockets))
-  
-    // Forward Message
-    //
-    // Receive               Example
-    // [toUserID, text]      [2, "Hello, World!"]
-    //
-    // Send                  Example
-    // [fromUserID, text]    [1, "Hello, World!"]
+
     webSocket.on('message', function(message) {
       console.log('received from ' + userID + ': ' + message)
       var messageArray = JSON.parse(message)
@@ -40,7 +33,7 @@ wss.on('connection', function (webSocket, req) {
 
     webSocket.on('close', () => {
         delete webSockets[userID]
-        console.log('deleted: ' + userID)
+        console.log('connection of ' + userID + ' has been disconnected')
     });
 })
 
